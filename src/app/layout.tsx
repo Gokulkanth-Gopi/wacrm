@@ -38,7 +38,8 @@ const metadata: Metadata = {
     follow: false,
   },
   icons: {
-    icon: [{ url: "/icon" }],
+    icon: [{ url: "/logo.png" }],
+    apple: [{ url: "/logo.png" }],
   },
   formatDetection: {
     email: false,
