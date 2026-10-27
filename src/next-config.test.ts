@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { getPathMatch } from "next/dist/shared/lib/router/utils/path-match";
-import nextConfig from "../next.config";
+import nextConfig from "../next.config.mjs";
 
 async function cacheControlFor(pathname: string) {
-  const rules = (await nextConfig.headers?.()) ?? [];
+  const rules = (await (nextConfig as { headers?: () => Promise<Array<{ source: string; headers: Array<{ key: string; value: string }> }>> }).headers?.()) ?? [];
   const values = rules
-    .filter((rule) => getPathMatch(rule.source, { strict: true })(pathname))
-    .flatMap((rule) => rule.headers)
-    .filter((header) => header.key.toLowerCase() === "cache-control")
-    .map((header) => header.value);
+    .filter((rule: { source: string }) => getPathMatch(rule.source, { strict: true })(pathname))
+    .flatMap((rule: { headers: Array<{ key: string; value: string }> }) => rule.headers)
+    .filter((header: { key: string }) => header.key.toLowerCase() === "cache-control")
+    .map((header: { value: string }) => header.value);
   return values.at(-1);
 }
 
