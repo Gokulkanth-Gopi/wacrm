@@ -54,7 +54,6 @@ const nextConfig = {
     };
     return config;
   },
-  output: "standalone",
   experimental: {
     turbopackPluginRuntimeStrategy: "workerThreads",
   },
