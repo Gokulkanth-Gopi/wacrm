@@ -1,3 +1,4 @@
+import path from "node:path";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
@@ -45,12 +46,19 @@ const nextConfig = {
       "@app-messages": `./messages/${APP_LOCALE}.json`,
     },
   },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve(process.cwd(), "src"),
+      "@app-messages": path.resolve(process.cwd(), `messages/${APP_LOCALE}.json`),
+    };
+    return config;
+  },
   output: "standalone",
   experimental: {
     turbopackPluginRuntimeStrategy: "workerThreads",
   },
   agentRules: false,
-
   allowedDevOrigins: [
     "*.ngrok-free.app",
     "*.ngrok.app",
