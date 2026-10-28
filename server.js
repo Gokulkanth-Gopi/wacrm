@@ -4,6 +4,9 @@ const path = require('path');
 // When Next.js builds with `output: "standalone"`, run the standalone server
 const standaloneServer = path.join(__dirname, '.next', 'standalone', 'server.js');
 
+process.env.PORT = process.env.PORT || '3001';
+process.env.HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
+
 if (fs.existsSync(standaloneServer)) {
   require(standaloneServer);
 } else {
